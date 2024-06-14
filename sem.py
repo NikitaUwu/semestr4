@@ -19,12 +19,22 @@ async def get_response(url):
             return await resp.json()
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def start(update, context):
     await update.message.reply_text("Здравствуйте, чем я могу вам помочь?", reply_markup=markup)
 
 
-async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text("Use /start to test this bot.", reply_markup=markup)
+async def help(update, context):
+    await update.message.reply_text(
+        '''/start - начало работы с ботом
+        /help - выводит это сообщение
+        /spell - выдает случайное заклинание
+        /spell smth - выводит информацию о заклинании по запросу
+        /class - выводит случайный класс приключенца
+        /class smth - выводит информацию о введенном классе
+        /race - выводит случайнуюю игровую расу
+        /race smth - выводит игровую расу по запросу
+        /roll - бросок монетки
+        /roll d(4, 6, 8, 10, 12, 20, 100, %) - бросок четырех-, шести- и тд гранника''')
 
 
 async def spell(update, context):
@@ -105,7 +115,7 @@ async def how_start(update, context):
         await update.message.reply_text(msg)
 
 
-def main() -> None:
+def main():
     application = Application.builder().token(TG_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help))
